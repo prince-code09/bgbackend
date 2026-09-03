@@ -38,7 +38,7 @@ def home():
 def remove_background():
     file = request.files['image']
     input_image = Image.open(file.stream)
-    output_image = remove(input_image, session=session)
+    output_image = remove(input_image)
 
     img_io = io.BytesIO()
     output_image.save(img_io, 'PNG')
@@ -79,4 +79,6 @@ def login():
     return jsonify({"message": "Login successful!", "token": access_token}), 200
 
 if __name__ == '__main__':
-  app.run(debug=True, port=5000, threaded=True)
+import os
+port = int(os.environ.get("PORT", 5000))
+app.run(debug=True, host="0.0.0.0", port=port, threaded=True)
